@@ -17,7 +17,7 @@ def is_valid(d):
 
     byr = int(byr)
     if byr < 1920 or byr > 2002:
-        return  False
+        return False
 
     iyr = d['iyr']
     if len(iyr) != 4:
