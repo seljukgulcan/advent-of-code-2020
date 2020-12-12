@@ -57,7 +57,7 @@ def process(M):
                     new_M[i][j] = FULL
 
             else:
-                raise ValueError('Unexpeced seat value: {}'.format(M[i][j]))
+                raise ValueError('Unexpected seat value: {}'.format(M[i][j]))
 
     return new_M, change_count
 
