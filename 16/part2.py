@@ -66,52 +66,39 @@ ticket_lst = [ticket_lst[i] for i in valid_ticket_id_lst]
 
 valid_lst = None
 
+index2name = [None for _ in range(len(rule_lst))]
 
-for no_index in range(len(rule_lst)):
-    print(no_index)
-    valid_so_far = list(rule_lst)
-    for ticket in ticket_lst:
-        no = ticket[no_index]
+found_rule_lst = []
 
-        temp = []
-        for rule in valid_so_far:
-            if rule.satisfy(no):
-                temp.append(rule)
+for _ in range(len(rule_lst)):
+    for no_index in range(len(rule_lst)):
+        valid_so_far = list(rule_lst)
 
-        valid_so_far = temp
+        for rule in found_rule_lst:
+            valid_so_far.remove(rule)
 
-    print(valid_so_far)
-    print()
+        for ticket in ticket_lst:
+            no = ticket[no_index]
 
-print('====')
+            temp = []
+            for rule in valid_so_far:
+                if rule.satisfy(no):
+                    temp.append(rule)
 
-"""
-new_rule_lst = []
-for rule in rule_lst:
-    if rule.name not in ['arrival track', 'arrival location', 'arrival station', 'duration', 'row', 'seat', 'departure platform', 'departure location',
-                         'departure date', 'departure station', 'departure track', 'departure time', 'zone', 'train', 'route',
-                         'arrival platform', 'type', 'price']:
-        new_rule_lst.append(rule)
+            valid_so_far = temp
 
-for no_index in range(len(rule_lst)):
-    print(no_index)
+        if len(valid_so_far) == 1:
+            rule = valid_so_far[0]
+            print('Found {}'.format(rule))
+            index2name[no_index] = rule.name
+            found_rule_lst.append(rule)
+            break
 
-    valid_so_far = list(new_rule_lst)
-    for ticket in ticket_lst:
-        no = ticket[no_index]
+print(index2name)
 
-        temp = []
-        for rule in valid_so_far:
-            if rule.satisfy(no):
-                temp.append(rule)
+departure_rule_indices = [index for index, name in enumerate(index2name) if name.startswith('departure')]
+print(departure_rule_indices)
 
-        valid_so_far = temp
-
-    print(valid_so_far)
-    print()
-"""
-
-departure_rule_indices = [8, 10, 12, 13, 14, 16]
 answer = 1
 for index in departure_rule_indices:
     answer *= my_ticket[index]
